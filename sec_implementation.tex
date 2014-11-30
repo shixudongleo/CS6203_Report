@@ -1,39 +1,6 @@
 \section{Implementation}
 \label{sec:sec_algorithm}
 
-\subsection{Architecture of Distributed Video Processing}
-
-\subsubsection{Distributed Video Processing Software Stack}
-
-\begin{figure}[htbp!]\centering
-\vspace{-1ex}
-\includegraphics[width=0.5\textwidth]{figures/softwarestack.pdf}
-\vspace{-4ex}
-\caption{Distributed video processing software stack}
-\label{fig:overview}
-\end{figure}
-
-\subsubsection{Casestudy: Distributed People Counting in Large Video}
-
-Figure~\ref{fig:overview} shows execution process of our people counting
-application.
-
-\begin{figure}[htbp!]\centering
-\vspace{-1ex}
-\includegraphics[width=0.5\textwidth]{figures/overview.pdf}
-\vspace{-4ex}
-\caption{Execution of people counting application}
-\label{fig:overview}
-\end{figure}
-
-\TODO{
-Hi, can you add more for this part based on 
-http://blog.pivotal.io/data-science-pivotal/products/using-hadoop-mapreduce-for-distributed-video-transcoding
-}
-
-\TODO{mcc}
-\TODO{gop}
-
 \subsection{Cross Compile with MATLAB MCC}
 \subsubsection{Motivation}
 The core functionality, person detection, is implemented in MATLAB language. It
@@ -115,7 +82,7 @@ use this parameter as one configuration to control the program granularity.
 \begin{figure}[!htbp]
   \centering
   \begin{minipage}{1.0\columnwidth}
-  \includegraphics[width=1.05\linewidth]{video_gop_code.png}
+  \includegraphics[width=1.05\linewidth]{video_gop_code}
   \end{minipage}
   
   \vspace{-1ex}
@@ -130,4 +97,13 @@ use this parameter as one configuration to control the program granularity.
 
 The GoP location can be found by using GoP start code, typical GoP and video
 sequence code are shown in~\fig\ref{fig:video_gop_code}. 
+
+
+\subsubsection{Architecture of Distributed Video Processing}
+\TODO{
+Hi, can you add more for this part based on 
+http://blog.pivotal.io/data-science-pivotal/products/using-hadoop-mapreduce-for-distributed-video-transcoding
+}
+
+
 
