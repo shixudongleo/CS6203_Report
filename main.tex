@@ -1,0 +1,140 @@
+\documentclass{sig-alternate}
+
+\clubpenalty=10000 
+\widowpenalty=10000
+
+\usepackage{color}
+\usepackage{booktabs}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{xspace}
+\usepackage{balance}
+\usepackage{booktabs}
+\usepackage{mathtools}
+\usepackage{gensymb}
+
+
+\def\TODO#1{\textcolor{red}{{\bf [TODO:}~#1{\bf ]}}}
+\def\NOTE#1{\textcolor{blue}{{\bf [NOTE:}~#1{\bf ]}}}
+\def\CHK#1 {\textcolor{magenta}{{\bf [CHK:}~#1{\bf ]}}}
+
+\def\Vec#1{{\boldsymbol{#1}}}
+\def\Mat#1{{\boldsymbol{#1}}}
+
+\graphicspath{{./figures/}}
+
+\newcommand{\fig}{{Figure}\@\xspace}
+\newcommand{\tab}{{Table}\@\xspace}
+\newcommand{\eqn}{{Equation}\@\xspace}
+\newcommand{\ie}{{i.e.,}\@\xspace}
+\newcommand{\eg}{{e.g.,}\@\xspace}
+\newcommand{\etal}{{\it et~al.}\@\xspace}
+
+\makeatletter
+\DeclareRobustCommand{\etc}{%
+    \@ifnextchar{.}%
+        {etc}%
+        {etc.\@\xspace}%
+}
+\makeatother
+
+% 
+%
+%
+
+
+%  
+% front matter
+%
+
+% --- Author Metadata here ---
+\conferenceinfo{MM}{'14 Orlando}
+% \CopyrightYear{2007} % Allows default copyright year (20XX) to be over-ridden - IF NEED BE.
+%\crdata{0-12345-67-8/90/01}  % Allows default copyright data (0-89791-88-6/97/05) to be over-ridden - IF NEED BE.
+% --- End of Author Metadata ---
+
+
+\title
+  {
+  Analyzing Video Lifelog in real-time
+  }
+  
+% 
+% 
+
+\author
+  {
+  {Vu~Trang, Xudong~Shi}
+  \\
+  School of Computing, National University of Singapore, Singapore
+  \\
+  \\
+  \{ xx, xudong.shi \}@nus.edu.sg
+  }
+% \numberofauthors{4}  
+% \author
+%   {
+%   % 1st author
+%   \alignauthor
+%     Yongkang Wong\\
+%     \affaddr{Interactive \& Digital Media Institute}\\
+%     \affaddr{National University of Singapore}\\
+%     \email{yongkang.wong@nus.edu.sg}
+%   % 2nd author
+%   \alignauthor
+%     Name go here\ldots\\
+%     \affaddr{xxx}\\
+%     \affaddr{National University of Singapore}\\
+%     \email{xxx@xxx.xxx}
+%   \and
+%   % 3rd author
+%   \alignauthor
+%     Name go here\ldots\\
+%     \affaddr{xxx}\\
+%     \affaddr{National University of Singapore}\\
+%     \email{xxx@xxx.xxx}
+%   % 4th author
+%   \alignauthor
+%     Mohan S Kankanhalli\\
+%     \affaddr{School of Computing}\\
+%     \affaddr{National University of Singapore}\\
+%     \email{mohan@comp.nus.edu.sg}
+%   }
+
+
+% 
+% 
+% 
+
+
+\begin{document}
+
+\maketitle
+\sloppy
+
+%###############################################
+\input{sec_abstract}
+
+% http://www.acm.org/about/class/ccs98-html
+% \category{I.2.10}{Vision and Scene Understanding}{Video analysis}
+% \category{I.4.8}{Scene Analysis}{Motion}
+\category{I.5.4}{Applications}{Signal processing}
+\terms{Algorithms}
+\keywords{Zero-Shot, Multi-Modality Mining, Instance Association}
+
+%###############################################
+
+\input{sec_introduction}
+\input{sec_background}
+\input{sec_theory}
+\input{sec_implementation}
+\input{sec_experiment}
+\input{sec_conclusion}
+% \input{sec_acknowledgement}
+
+\balance
+\bibliographystyle{abbrv}
+\bibliography{reference}
+
+\end{document}
