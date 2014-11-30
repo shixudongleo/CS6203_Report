@@ -9,32 +9,47 @@
 There is recent work in the computer vision community that makes use of
 MapReduce framework. 
 
-\subsection{Image processing and Big Data Framework}
+\subsection{Image Processing and Big Data Framework}
 \citeauthor{2009_ICME_Liu}~\cite{2009_ICME_Liu} proposed a face tracking
 algorithm that uses multiple cues and a particle filtering algorithm. The mappers were applied in parallel
 over the particle predictions and the reducers computed the updated parameters.
-Experiments were carried out on a shared-memory implementation of MapReduce. \\
+Experiments were carried out on a shared-memory implementation of MapReduce. 
+
 \citeauthor{2009_ICCV_Li}~\cite{2009_ICCV_Li} developed a landmark
 classification system that uses bag-of-feature vector and structured SVMs to classify landmarks visually iin
 each photo in a user's photo-stream. They used a dataset of 6.5 million images
 taken from Flickr and an experiments using MapReduce. Though the MapReduce
 algorithm was not described, feature computation was mentioned to be the primary
-bottleneck. \\
+bottleneck. 
+
 \citeauthor{2009_WSMC_Kennedy}~\cite{2009_WSMC_Kennedy} explored a method to
 generate image tags similar to those found in the ESP game while producing more specific tags. They used
 MapReduce to directly search the nearest neighbor in their implementation. 19.6
-million images on Flickr were used in their experiment. \\
+million images on Flickr were used in their experiment. 
+
 \citeauthor{2010_KDD_White}~\cite{2010_KDD_White} discussed both the high level
 theory and the low level implementation for several computer vision algorithms:
 classifier training, sliding windows, clustering, bag-of-features, background
-subtraction and image registration. \\
+subtraction and image registration. 
+
 \citeauthor{2011_thesis_sweeney}~\cite{2011_thesis_sweeney} created a tool that
 makes development of large-scale image processing and image-based vision projects
 accessible. They empower developers to create large-scale image applications
 with ease.
 
-\subsection{Video processing and Big Data Framework}
+\subsection{Video Processing and Big Data Framework}
+\citeauthor{2012_SMCCSE_Kim}~\cite{2012_SMCCSE_Kim} proposed a Hadoop-based
+multimededia system for video transcoding processing on PaaS paltform. Their
+system reduce the encoding time for transcoding large amounts of video files
+into specific formats depending on user-requested options(such as resolution,
+bit rate and frame rate). 
 
+\citeauthor{2013_Pivotal}~\cite{2013_Pivotal} ingested video into Hadoop and
+perform parallel and distributed transcodiing to create a sequence file format
+containing JPEG images of the individual video format. Although they
+demonstrated the framework only with MPEG-2 vidoe format as an example, it is
+easy to imagine extending the framework to support a variety of format with the
+help of corresponding decoders that can be called from Mappers. 
 
 
 
