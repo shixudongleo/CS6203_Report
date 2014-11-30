@@ -1,8 +1,42 @@
 \section{Related Work}
 \label{sec:sec_background}
 
+
 \TODO{overview}
 \TODO{image processing \& big data framework}
 \TODO{video processing \ldots }
+
+There is recent work in the computer vision community that makes use of
+MapReduce framework. 
+
+\subsection{Image processing and Big Data Framework}
+\citeauthor{2009_ICME_Liu}~\cite{2009_ICME_Liu} proposed a face tracking
+algorithm that uses multiple cues and a particle filtering algorithm. The mappers were applied in parallel
+over the particle predictions and the reducers computed the updated parameters.
+Experiments were carried out on a shared-memory implementation of MapReduce. \\
+\citeauthor{2009_ICCV_Li}~\cite{2009_ICCV_Li} developed a landmark
+classification system that uses bag-of-feature vector and structured SVMs to classify landmarks visually iin
+each photo in a user's photo-stream. They used a dataset of 6.5 million images
+taken from Flickr and an experiments using MapReduce. Though the MapReduce
+algorithm was not described, feature computation was mentioned to be the primary
+bottleneck. \\
+\citeauthor{2009_WSMC_Kennedy}~\cite{2009_WSMC_Kennedy} explored a method to
+generate image tags similar to those found in the ESP game while producing more specific tags. They used
+MapReduce to directly search the nearest neighbor in their implementation. 19.6
+million images on Flickr were used in their experiment. \\
+\citeauthor{2010_KDD_White}~\cite{2010_KDD_White} discussed both the high level
+theory and the low level implementation for several computer vision algorithms:
+classifier training, sliding windows, clustering, bag-of-features, background
+subtraction and image registration. \\
+\citeauthor{2011_thesis_sweeney}~\cite{2011_thesis_sweeney} created a tool that
+makes development of large-scale image processing and image-based vision projects
+accessible. They empower developers to create large-scale image applications
+with ease.
+
+\subsection{Video processing and Big Data Framework}
+
+
+
+
  
  
