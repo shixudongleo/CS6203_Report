@@ -3,3 +3,110 @@
 
 \TODO{mcc}
 \TODO{gop}
+
+\subsection{Cross Compile with MATLAB MCC}
+\subsubsection{Motivation}
+The core functionality, person detection, is implemented in MATLAB language. It
+is rather time consuming to call MATLAB scripts directly. The reason resides in 
+the starting up time of MATLAB runtime. Since MATLAB is a scripting language, 
+it requires an interpreter to parse the program line by line. A typical time 
+spent on starting up MATLAB runtime would be 3-8 seconds, which cannot be
+ignored for batch processing programs. Thus, we want to seek a way to reduce 
+the starting up time for MATLAB runtime.
+
+\subsubsection{What is MATLAB MCC}
+MCC is the MATLAB command which stands for MATLAB Compiler. MCC prepares MATLAB 
+files for deployment outside of the MATLAB runtime environment. It can generate 
+wrapper files in C or C++, optionally build standalone binary files.
+MCC command can be issued either from MATLAB command prompt (MATLAB terminal) or
+the DOS or UNIX command line (Terminal). The resulting compiled files are
+written  into current folder by default.
+In summary, MATLAB MCC plays a role as a cross-platform compiler, which compiles
+MATLAB scripts into C or C++ wrapper and binary executable. Finally, the binary 
+executable has the same functionality as MATLAB script and is able to run without MATLAB runtime.
+
+\subsubsection{Advantages}
+The major advantage of using MATLAB MCC is shorter program running time. Since
+we can execute the binary to accomplish the same task as MATLAB scripts, we
+actually reduce the time of starting up MATLAB runtime environment.
+
+\subsubsection{Usage}
+The usage of MATLAB MCC mainly consists of two parts. 
+Part I, compile MATLAB scripts \& produce binary executable: \\
+mcc -mv -o binary\_execute  matlab\_script.m \\\\
+Part II, execute binary from shell or other program: \\	
+./binary\_execute.sh matlab\_path parameters
+
+
+\subsection{Divide Video into GOP(Group of Pictures)}
+\subsubsection{Motivation}
+We are utilizing Hadoop Distributed File System. We can not simply divide video
+into frames, store all frames in Hadoop Distributed File System, carry out
+person detection on each frame. This is due to the storage constrain and
+processing granularity. On the one hand, it is storage inefficient to store all 
+frames of a video. This is because no compression has been applied to the
+redundant information of images. On the other hand, applying frame-based person 
+detection is too granular. This will result in invoking external detection
+procedure to frequently and enormous memory for storing image file metadata in 
+namenode of Hadoop Distributed File System. Thus, there is emerging demand for 
+establishing a method divide video into video clips (Group of Pictures) and
+perform fragment-based person detection rather than frame-based person detection.
+
+\subsubsection{Video Hierarchical Structure}
+In order to increase random access, modern video compression standards all
+support hierarchical video stream structure. Typical compression codecs are  
+methods like MPEG-2, H264.
+
+\begin{figure}[!htbp]
+  \centering
+  \begin{minipage}{1.0\columnwidth}
+  \includegraphics[width=1.05\linewidth]{video_gop}
+  \end{minipage}
+  
+  \vspace{-1ex}
+  \caption
+    {
+    \small
+    The structure of a typical video sequence. There are many GoPs between video
+    sequence header and sequence end code.}
+  \label{fig:video_gop}
+\end{figure}
+
+As shown in~\fig\ref{fig:video_gop}, video sequence begins with a sequence
+header and ends with a sequence end code. It is worth mentioning that there are
+many GOPs (Group of Pictures) between sequence beginning and sequence ending 
+position. One typical GoP may consists of 10 - 15 frames and is about 300 -
+600KB large.
+GOP is a independent unit which can be directly interpret by video player. We
+can store multiple GoPs as a file in HDFS, and person detection can be done
+based on those GoPs. However, the number of GoPs can be user-defined. Users can
+use this parameter as one configuration to control the program granularity.
+
+\begin{figure}[!htbp]
+  \centering
+  \begin{minipage}{1.0\columnwidth}
+  \includegraphics[width=1.05\linewidth]{video_gop_code}
+  \end{minipage}
+  
+  \vspace{-1ex}
+  \caption
+    {
+    \small
+    Some typical location marker code in video. The video sequence header code,
+    sequence end code and GoP start code. 
+    }
+  \label{fig:video_gop_code}
+\end{figure}
+
+The GoP location can be found by using GoP start code, typical GoP and video
+sequence code are shown in~\fig\ref{fig:video_gop_code}. 
+
+
+\subsubsection{Architecture of Distributed Video Processing}
+\TODO{
+Hi, can you add more for this part based on 
+http://blog.pivotal.io/data-science-pivotal/products/using-hadoop-mapreduce-for-distributed-video-transcoding
+}
+
+
+
