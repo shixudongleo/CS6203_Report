@@ -1,4 +1,4 @@
-\section{Implementation}
+\section{Design and Implementation}
 \label{sec:sec_algorithm}
 \subsection{Architecture of Distributed Video Processing}
 
@@ -44,7 +44,13 @@ person (introvert/extravert). It can also provide some cues for the kind of
 environment the person is in. This can result in some applications which remind
 people of theives when that person in crowed area.
 
-Figure~\ref{fig:overview} shows execution process of our people counting
+Figure~\ref{fig:overview}\begin{figure}[htbp!]\centering
+\vspace{-1ex}
+\includegraphics[width=0.5\textwidth]{figures/overview.pdf}
+\vspace{-4ex}
+\caption{Execution of people counting application}
+\label{fig:overview}
+\end{figure} shows execution process of our people counting
 application. We use Spark as excution engine and Matlab as video processing
 toolbox. Our application is implemented as a tradition MapReduce program with
 one map and one reduce phase. During execution time, video stored in HDFS are read as GOPs by mappers. Since our processing logics are written in Matlab,
@@ -53,13 +59,6 @@ This is an expensive call due to large overhead of Matlab startup. In our
 implementation, we tried to minimize the number of Matlab call by processing at
 coarse grain inputs - GOPs instead of frames. We also reduce Matlab startup
 overhead by cross compile with MATLAB MCC (\textsection\ref{sec:mcc}).
-\begin{figure}[htbp!]\centering
-\vspace{-1ex}
-\includegraphics[width=0.5\textwidth]{figures/overview.pdf}
-\vspace{-4ex}
-\caption{Execution of people counting application}
-\label{fig:overview}
-\end{figure}
 
 Each mapper takes an $<gop\_id, GOP>$ as input and return total number of people
 appearance in that GOP as well as the bounding boxes and frame\_id they belong.
@@ -164,12 +163,6 @@ use this parameter as one configuration to control the program granularity.
 The GoP location can be found by using GoP start code, typical GoP and video
 sequence code are shown in~\fig\ref{fig:video_gop_code}. 
 
-
-\subsubsection{Architecture of Distributed Video Processing}
-\TODO{
-Hi, can you add more for this part based on 
-http://blog.pivotal.io/data-science-pivotal/products/using-hadoop-mapreduce-for-distributed-video-transcoding
-}
 
 
 
