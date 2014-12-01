@@ -1,7 +1,7 @@
 \section{Evaluation}
 \label{sec:sec_experiment}
 In this section, we have evaluated accuracy and efficiency of our implementation
-for PeopleCounting problem. Because video can be considered as a sequence of
+for People Counting problem. Because video can be considered as a sequence of
 images, and counting people in a video is equivalent to summing on people
 appearance in all frames of the video, the accuracy test is done at frame-level
 using INRIA Dataset~\cite{2005_CVPR_Dalal}. For efficiency test, we examined the
@@ -36,7 +36,7 @@ pixels~\cite{2012_PAMI_Dollar}. The INRIA Dataset helped driven the recent
 advances of pedestrian detection. In spite of its limitations, it remains as one
 of the most popular pedestrian detection data sets. 
 
-\begin{figure*}[!t]
+\begin{figure*}[!htbp]
   \centering
 
 	\begin{minipage}{2.0\columnwidth}
@@ -131,7 +131,7 @@ slightly modified so that it can be run on top of computer clusters to utilize
 the computation power. 
 
 
-\begin{figure}[!htbp]
+\begin{figure}[!t]
   \centering
   \begin{minipage}{1.0\columnwidth}
   \includegraphics[width=1.05\linewidth]{InriaTest}
@@ -150,25 +150,25 @@ the computation power.
 \subsection{Efficiency Test}
 We intended to evaluate scalability of our implementation by executing at
 different cluster size: 1, 2, 4 and 8. However, we could not make HDFS run
-sucessfully on Tembusu cluster because all 8 nodes shared same logical disk
-view. Parallel and ditributed programs which designed for running at large
+successfully on Tembusu cluster because all 8 nodes shared same logical disk
+view. Parallel and distributed programs which designed for running at large
 scale, such as MPI, Hadoop MapReduce, Spark, often have a uniform setup for all
 workers, i.e. all nodes have same directory structure, for automation and
 ease of management. Tembusu cluster setup works well when application only read
-input data for processing and there is only one master reponsible for writing
+input data for processing and there is only one master responsible for writing
 output. Our Spark application involves a lot read and write between
-execution phases which resulted in only 1 datanode have privilige to access data
-in orfer to avoid data race problem. Therefore, we can only use 2 nodes for our
+execution phases which resulted in only 1 datanode have privilege to access data
+in order to avoid data race problem. Therefore, we can only use 2 nodes for our
 experiment: 1 master node and 1 worker node with 4 worker threads (to have
 sufficient memory for each task).
 
-For efficiency test, we run our PeopleCounting program with a 262MB surveillance
-video which contains 6154 frames. Our program tooked 3225 second to complete the
+For efficiency test, we run our People Counting program with a 262MB surveillance
+video which contains 6154 frames. Our program took 3225 second to complete the
 job and the degree of parallelism is 4 (4 worker threads). Compare to processing
 frame by frame, it would take around 6154 frame x 11.5 second/frame (the mean
 frame execution time taken from accuracy test) which is 70771 second. Ignore
 parallel overhead, frame execution could take about 17692 second to finish. The
 source of improvement is coarse-grain execution by using GOP as computation unit
 instead of frame and less number of MATLAB call. Although this is not a totally
-fair comparision, it can show the promise of using big data frame work to speed
+fair comparison, it can show the promise of using big data frame work to speed
 up video processing time.
