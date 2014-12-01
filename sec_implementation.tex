@@ -1,8 +1,7 @@
 \section{Design and Implementation}
 \label{sec:sec_algorithm}
-\subsection{Architecture of Distributed Video Processing}
 
-\subsubsection{Distributed Video Processing Software Stack}
+\subsection{Distributed Video Processing Software Stack}
 Figure~\ref{fig:stack} shows the software stack for distributed video
 processing.Similar to other types of big data application, data are also stored
 in distributed file system such as Google File System (GFS)\cite{gfs}, Hadoop
@@ -36,7 +35,7 @@ ability of \textit{video processing toolboxes} and flexibility, scalability of
 \textit{big data execution engines}. These two components communicate with each
 other via a communication layer such as pipe, IPC protocol or memory-mapping which uses in our case study.
 
-\subsubsection{Casestudy: Distributed People Counting in Large Video}
+\subsection{Casestudy: Distributed People Counting in Large Video}
 %\TODO{problem statement}
 People Counting is one of the key components to video lifelog. By knowing how
 many people one person see, it will help provide the social preference of the
