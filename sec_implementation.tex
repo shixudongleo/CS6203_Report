@@ -3,20 +3,51 @@
 \subsection{Architecture of Distributed Video Processing}
 
 \subsubsection{Distributed Video Processing Software Stack}
-
+Figure~\ref{fig:stack} shows the software stack for distributed video
+processing.Similar to other types of big data application, data are also stored
+in distributed file system such as Google File System (GFS)\cite{gfs}, Hadoop
+Distributed File System (HDFS)\cite{hdfs}. However, storing video are more
+challenged than storing text because its special structure does not allow
+arbitrary partition and requires us to read sequentially.
 \begin{figure}[htbp!]\centering
 \vspace{-1ex}
 \includegraphics[width=0.5\textwidth]{figures/softwarestack.pdf}
 \vspace{-4ex}
 \caption{Distributed video processing software stack}
-\label{fig:overview}
+\label{fig:stack}
 \end{figure}
+ \textit{Input format
+layer} is designed to efficiently partition, read and write large video files by
+implementing distributed file systems APIs. One important aspect to be consider
+when implement input format layer is storage unit and computation unit. As
+mentioned earlier, we cannot arbitrary partition video into smaller blocks
+(block size as partition metric). We have to decompress it and read as frames
+which results in large numbers of smaller files and disk-consuming, before
+processing. To overcome this problem, we decided to divide video into smaller
+subvideos - also called \textit{Group-of-Picture (GOP)}, which will be describe
+in Section~\ref{sec:gop}. 
+
+At execution layer, we also use available big data execution engines such as
+Spark\cite{spark}, Spark Streaming\cite{sparkstreaming}, Hadoop
+MapReduce\cite{hadoop}. These execution engines are usually implemented in Java,
+Scala which are not well-supported for video processing. We integrate the best
+of both worlds in our design by leveraging well-supported video processing
+ability of \textit{video processing toolboxes} and flexibility, scalability of
+\textit{big data execution engines}. These two components communicate with each
+other via a communication layer such as pipe, IPC protocol or memory-mapping which uses in our case study.
 
 \subsubsection{Casestudy: Distributed People Counting in Large Video}
+\TODO{problem statement}
 
 Figure~\ref{fig:overview} shows execution process of our people counting
-application.
-
+application. We use Spark as excution engine and Matlab as video processing
+toolbox. Our application is implemented as a tradition MapReduce program with
+one map and one reduce phase. During execution time, video stored in HDFS are read as GOPs by mappers. Since our processing logics are written in Matlab,
+each mapper passes the GOP to a Matlab process via Spark \textit{pipe} methods.
+This is an expensive call due to large overhead of Matlab startup. In our
+implementation, we tried to minimize the number of Matlab call by processing at
+coarse grain inputs - GOPs instead of frames. We also reduce Matlab startup
+overhead by cross compile with MATLAB MCC (\textsection\ref{sec:mcc}).
 \begin{figure}[htbp!]\centering
 \vspace{-1ex}
 \includegraphics[width=0.5\textwidth]{figures/overview.pdf}
@@ -25,12 +56,13 @@ application.
 \label{fig:overview}
 \end{figure}
 
-\TODO{
-Hi, can you add more for this part based on 
-http://blog.pivotal.io/data-science-pivotal/products/using-hadoop-mapreduce-for-distributed-video-transcoding
-}
+Each mapper takes an $<gop\_id, GOP>$ as input and return total number of people
+appearance in that GOP as well as the bounding boxes and frame\_id they belong.
+Mappers pass the result of number of people to reducer which will sum up for
+final result. Bounding boxe details are stored back into HDFS for later
+retrieval.
 
-\subsection{Cross Compile with MATLAB MCC}
+\subsection{Cross Compile with MATLAB MCC}\label{sec:mcc}
 \subsubsection{Motivation}
 The core functionality, person detection, is implemented in MATLAB language. It
 is rather time consuming to call MATLAB scripts directly. The reason resides in 
@@ -64,7 +96,7 @@ Part II, execute binary from shell or other program: \\
 ./binary\_execute.sh matlab\_path parameters
 
 
-\subsection{Divide Video into GOP(Group of Pictures)}
+\subsection{Divide Video into GOP(Group of Pictures)} \label{sec:gop}
 \subsubsection{Motivation}
 We are utilizing Hadoop Distributed File System. We can not simply divide video
 into frames, store all frames in Hadoop Distributed File System, carry out
